@@ -1,0 +1,78 @@
+{
+  "name": "express-seq-rest-api-server",
+  "version": "0.1.0",
+  "description": "Express Rest API Server Boilerplate",
+  "main": "node ./bin/www",
+  "private": false,
+  "engines": {
+    "node": ">=12.14.0",
+    "npm": ">=6.13.0"
+  },
+  "scripts": {
+    "seed": "node seed.js",
+    "start": "node ./bin/www",
+    "start-dev": "nodemon ./bin/www",
+    "start:debug": "cross-env DEBUG=express-seq-rest-api-server:* yarn start",
+    "lint": "esw *.js server config --color",
+    "lint:watch": "yarn lint -- --watch",
+    "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --ui bdd --reporter spec --colors server --recursive",
+    "test:watch": "yarn test -- --watch",
+    "test:coverage": "nyc --reporter=lcov --reporter=text yarn test",
+    "docs": "./node_modules/.bin/jsdoc server -t ./node_modules/ink-docstrap/template -R README.md -r -d docs"
+  },
+  "dependencies": {
+    "@hapi/joi": "false17.1.0",
+    "bcrypt": "^3.0.7",
+    "body-parser": "1.19.0",
+    "compression": "1.7.4",
+    "cookie-parser": "1.4.4",
+    "cors": "2.8.5",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "express": "4.17.1",
+    "express-jwt": "5.3.1",
+    "express-jwt-permissions": "false1.3.3",
+    "express-validation": "false1.0.3",
+    "express-winston": "4.0.2",
+    "helmet": "3.21.2",
+    "http-status": "1.4.2",
+    "joi": "false14.3.1",
+    "jsonwebtoken": "8.5.1",
+    "method-override": "^3.0.0",
+    "morgan": "1.9.1",
+    "passport": "false0.4.1",
+    "passport-jwt": "false4.0.0",
+    "sequelize": "false5.21.4",
+    "sequelize-cli": "false5.5.1",
+    "sqlite3": "false4.1.1",
+    "winston": "3.2.1"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "commitizen": "^4.0.3",
+    "coveralls": "^3.0.9",
+    "cross-env": "7.0.0",
+    "cz-conventional-changelog": "3.1.0",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "2.20.0",
+    "eslint-watch": "6.0.1",
+    "gulp": "false4.0.2",
+    "husky": "4.2.1",
+    "ink-docstrap": "false1.3.2",
+    "istanbul": "1.1.0-alpha.1",
+    "jsdoc": "false3.6.3",
+    "mocha": "7.0.1",
+    "nodemon": "false2.0.2",
+    "nyc": "false15.0.0",
+    "pre-commit": "false1.2.2",
+    "supertest": "4.0.2",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test"
+    }
+  }
+}
