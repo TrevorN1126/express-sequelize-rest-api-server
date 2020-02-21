@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 
-const UserModel = require('../user/user.model');
+const models  = require('../db/models');
 
 /**
 * Creates a new ThingService.
@@ -17,18 +17,26 @@ class AuthService {
     try {
       // Find the User
       const user = await this.model.findOne({
-        username: username
+        where: {username: username},
+        include: models.Permission
       });
       if (!user) throw Error('User not found.');
 
-      const passwordIsValid = bcrypt.compareSync(password, user.password);
-      if (!passwordIsValid) throw Error("Invalid password.")
+      const passwordIsValid = await bcrypt.compare(password, user.password);
+      if (!passwordIsValid) throw Error("Invalid password.");
+
+      const permissions = [];
+      user.Permissions.forEach((item) => {
+        permissions.push(item.role);
+      });
+      user.dataValues.permissions = permissions;
 
       const token = jwt.sign(
         {user},
         config.jwtSecret,
         {expiresIn: '2 days'}
       );
+
       return {
         success: true,
         message: 'Authentication successfull',
@@ -43,4 +51,4 @@ class AuthService {
 
 }
 
-module.exports = new AuthService(UserModel);
+module.exports = new AuthService(models.User);

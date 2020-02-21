@@ -1,7 +1,8 @@
 /**
  * @file user.service.js Service for the user component
  */
-const UserModel = require('./user.model');
+const models = require('../db/models');
+const User = models.User;
 
 /**
  * @classdesc Creates a new UserService.
@@ -17,8 +18,8 @@ class UserService {
   async Create(user) {
     try {
 
-      const userRecord = await UserModel.create(user);
-      return { user: userRecord };
+      const userRecord = await User.create(user);
+      return  userRecord;
 
     } catch (e) {
       return e;
@@ -32,7 +33,7 @@ class UserService {
    * @return {object} user
    */
   async GetUser(userId){
-    let user = await UserModel.findById(userId);
+    let user = await User.findByPk(userId, {include: models.Permission});
     if (!user) throw new Error('User not found');
     return user;
 
@@ -46,10 +47,13 @@ class UserService {
    */
   async Update(userId, newValues) {
 
-    let user = await UserModel.findById(userId);
-    if (!user) return res.json({ message: 'User not found' });
-    Object.assign(user, newValues);
-    await user.save();
+    // let user = await User.findByPk(userId);
+    // if (!user) return res.json({ message: 'User not found' });
+    // Object.assign(user, newValues);
+    // await user.save();
+    let user = await User.update(newValues, {
+      where: {id: userId}
+    });
     return user;
 
   }
@@ -59,12 +63,14 @@ class UserService {
    * @return {object[]} user - An array of users
    */
   async List(){
-    let users = await UserModel.find({});
+    let users = await User.findAll({});
     return users;
   }
 
   async Remove(userId){
-    let userRemoved = await UserModel.remove({ _id: userId });
+    let userRemoved = await User.destroy({
+      where: {id: userId},
+    });
     return userRemoved;
   }
 

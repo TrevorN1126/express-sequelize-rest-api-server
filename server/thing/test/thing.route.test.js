@@ -20,7 +20,7 @@
 //   done();
 // });
 //
-// describe('## User APIs', () => {
+// describe('## Thing Routes', () => {
 //   let admin = {
 //     username: 'TestAdmin',
 //     password: 'password',
@@ -28,19 +28,19 @@
 //     token: 'Bearer '
 //   };
 //
-//   let newUser = {
-//     username: 'newTestUser',
-//     password: 'password',
-//     permissions: ['user']
+//   let newThing = {
+//     name: 'newTestThing',
+//     description: 'description of newTestThing'
 //   };
 //
-//   let updateUser = {
-//     username: 'newTestUser1',
-//     password: 'newpassword',
-//     permissions: ['admin']
+//   let updateThing = {
+//     name: 'newTestThing1',
+//     description: 'description of newTestThing1'
 //   };
 //
-//   // jwtToken = 'Bearer ';
+//   const badThing = {
+//     description: 'Thing without the required name'
+//   };
 //
 //   before(async () => {
 //     await request(app)
@@ -56,22 +56,10 @@
 //
 //   });
 //
-//   describe('# GET /api/users', () => {
-//     it('should report an error - Unauthorized', (done) => {
+//   describe('# GET /api/things', () => {
+//     it('should get all things', (done) => {
 //       request(app)
-//         .get('/api/users')
-//         .expect(httpStatus.UNAUTHORIZED)
-//         .then((res) => {
-//           expect(res.body.message).to.equal('Unauthorized');
-//           done();
-//         })
-//         .catch(done);
-//     });
-//
-//     it('should get all users', (done) => {
-//       request(app)
-//         .get('/api/users')
-//         .set('Authorization', admin.token)
+//         .get('/api/things')
 //         .expect(httpStatus.OK)
 //         .then((res) => {
 //           expect(res.body).to.be.an('array');
@@ -82,11 +70,25 @@
 //   });
 //
 //
-//   describe('# POST /api/users', () => {
+//   describe('# POST /api/things', () => {
+//     it('should create a new thing', (done) => {
+//       request(app)
+//         .post('/api/things')
+//         .set('Authorization', admin.token)
+//         .send(newThing)
+//         .expect(httpStatus.OK)
+//         .then((res) => {
+//           expect(res.body.name).to.equal(newThing.name);
+//           newThing = res.body;
+//           done();
+//         })
+//         .catch(done);
+//     });
+//
 //     it('should report an error - Unauthorized', (done) => {
 //       request(app)
-//         .post('/api/users')
-//         .send(newUser)
+//         .post('/api/things')
+//         .send(newThing)
 //         .expect(httpStatus.UNAUTHORIZED)
 //         .then((res) => {
 //           expect(res.body.message).to.equal('Unauthorized');
@@ -95,25 +97,54 @@
 //         .catch(done);
 //     });
 //
-//     it('should create a new user', (done) => {
+//     // it('It should report an Error - ', (done) => {
+//     //   request(app)
+//     //     .post('/api/things')
+//     //     .set('Authorization', admin.token)
+//     //     .send(badThing)
+//     //     .expect(httpStatus.OK)
+//     //     .then((res) => {
+//     //       expect(res.body.name).to.equal(newThing.name);
+//     //       newThing = res.body;
+//     //       done();
+//     //     })
+//     //     .catch(done);
+//     // });
+//
+//
+//   });
+//
+//   describe('# GET /api/things/:thingId', () => {
+//     it('should get thing details', (done) => {
 //       request(app)
-//         .post('/api/users')
-//         .set('Authorization', admin.token)
-//         .send(newUser)
+//         .get(`/api/things/${newThing._id}`)
 //         .expect(httpStatus.OK)
 //         .then((res) => {
-//           expect(res.body.user.username).to.equal(newUser.username);
-//           newUser = res.body.user;
+//           expect(res.body.name).to.equal(newThing.name);
+//           done();
+//         })
+//         .catch(done);
+//     });
+//
+//     it('should report error with message - Thing Not Found, when thing does not exists', (done) => {
+//       request(app)
+//         .get('/api/things/56c787ccc67fc16ccc1a5e92')
+//         .set('Authorization', admin.token)
+//         // .expect(httpStatus.NOT_FOUND)
+//         .then((res) => {
+//           // console.log(res.body);
+//           expect(res.body.message).to.equal('Thing not found.');
 //           done();
 //         })
 //         .catch(done);
 //     });
 //   });
 //
-//   describe('# GET /api/users/:userId', () => {
+//   describe('# PUT /api/things/:thingId', () => {
 //     it('should report an error - Unauthorized', (done) => {
 //       request(app)
-//         .get(`/api/users/${newUser._id}`)
+//         .put(`/api/things/${newThing._id}`)
+//         .send(updateThing)
 //         .expect(httpStatus.UNAUTHORIZED)
 //         .then((res) => {
 //           expect(res.body.message).to.equal('Unauthorized');
@@ -122,36 +153,24 @@
 //         .catch(done);
 //     });
 //
-//     it('should get user details', (done) => {
+//     it('should update thing details', (done) => {
 //       request(app)
-//         .get(`/api/users/${newUser._id}`)
+//         .put(`/api/things/${newThing._id}`)
 //         .set('Authorization', admin.token)
+//         .send(updateThing)
 //         .expect(httpStatus.OK)
 //         .then((res) => {
-//           expect(res.body.username).to.equal(newUser.username);
-//           done();
-//         })
-//         .catch(done);
-//     });
-//
-//     it('should report error with message - User Not Found, when user does not exists', (done) => {
-//       request(app)
-//         .get('/api/users/56c787ccc67fc16ccc1a5e92')
-//         .set('Authorization', admin.token)
-//         .expect(httpStatus.NOT_FOUND)
-//         .then((res) => {
-//           expect(res.body.message).to.equal('User Not Found');
+//           expect(res.body.name).to.equal(updateThing.name);
 //           done();
 //         })
 //         .catch(done);
 //     });
 //   });
 //
-//   describe('# PUT /api/users/:userId', () => {
+//   describe('# DELETE /api/things/', () => {
 //     it('should report an error - Unauthorized', (done) => {
 //       request(app)
-//         .put(`/api/users/${newUser._id}`)
-//         .send(updateUser)
+//         .delete(`/api/things/${newThing._id}`)
 //         .expect(httpStatus.UNAUTHORIZED)
 //         .then((res) => {
 //           expect(res.body.message).to.equal('Unauthorized');
@@ -160,35 +179,9 @@
 //         .catch(done);
 //     });
 //
-//     it('should update user details', (done) => {
+//     it('should delete a thing', (done) => {
 //       request(app)
-//         .put(`/api/users/${newUser._id}`)
-//         .set('Authorization', admin.token)
-//         .send(updateUser)
-//         .expect(httpStatus.OK)
-//         .then((res) => {
-//           expect(res.body.username).to.equal(updateUser.username);
-//           done();
-//         })
-//         .catch(done);
-//     });
-//   });
-//
-//   describe('# DELETE /api/users/', () => {
-//     it('should report an error - Unauthorized', (done) => {
-//       request(app)
-//         .delete(`/api/users/${newUser._id}`)
-//         .expect(httpStatus.UNAUTHORIZED)
-//         .then((res) => {
-//           expect(res.body.message).to.equal('Unauthorized');
-//           done();
-//         })
-//         .catch(done);
-//     });
-//
-//     it('should delete a user', (done) => {
-//       request(app)
-//         .delete(`/api/users/${newUser._id}`)
+//         .delete(`/api/things/${newThing._id}`)
 //         .set('Authorization', admin.token)
 //         .expect(httpStatus.OK)
 //         .then((res) => {

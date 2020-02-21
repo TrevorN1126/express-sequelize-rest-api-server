@@ -44,10 +44,9 @@ Set environment (vars):
 cp .env.example .env
 ```
 
-Seed database with a test admin and user:
-(Not a best practice but these users are needed in `yarn test` to get the jwt)
+Create db tables
 ```sh
-yarn seed
+npx sequelize-cli db:migrate
 ```
 
 Start server:

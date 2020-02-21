@@ -8,7 +8,7 @@ chai.config.includeStack = true;
 
 describe('## Auth Routes', () => {
   const validUserCredentials = {
-    username: 'TestUser',
+    username: 'TestAdmin',
     password: 'password'
   };
 

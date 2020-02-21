@@ -1,5 +1,5 @@
 const DbService = require('../helpers/baseDbService');
-const ThingModel = require('./thing.model');
+const Thing = require('../db/models');
 
 /**
  * Creates a new ThingService.
@@ -11,4 +11,4 @@ class ThingService extends DbService {
   }
 }
 
-module.exports = new ThingService('Thing', ThingModel);
+module.exports = new ThingService('Thing', Thing);

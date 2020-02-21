@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": "t6y7uhgyMdb",
+    "database": "database_development",
+    "host": "127.0.0.1",
+    "dialect": "mariadb",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": "t6y7uhgyMdb",
+    "database": "database_development",
+    "host": "127.0.0.1",
+    "dialect": "mariadb",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "root",
+    "password": "t6y7uhgyMdb",
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mariadb",
+    "operatorsAliases": false
+  }
+}
