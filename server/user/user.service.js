@@ -22,7 +22,7 @@ class UserService {
       return  userRecord;
 
     } catch (e) {
-      return e;
+      return new Error(e.message);
     }
 
   }
@@ -33,9 +33,13 @@ class UserService {
    * @return {object} user
    */
   async GetUser(userId){
-    let user = await User.findByPk(userId, {include: models.Permission});
-    if (!user) throw new Error('User not found');
-    return user;
+    try {
+      let user = await User.findByPk(userId, {include: models.Permission});
+      if (!user) throw new Error('User not found.');
+      return user;
+    } catch (e) {
+      return e;
+    }
 
   }
 
@@ -46,16 +50,15 @@ class UserService {
    * @return {object} user
    */
   async Update(userId, newValues) {
-
-    // let user = await User.findByPk(userId);
-    // if (!user) return res.json({ message: 'User not found' });
-    // Object.assign(user, newValues);
-    // await user.save();
-    let user = await User.update(newValues, {
-      where: {id: userId}
-    });
-    return user;
-
+    try {
+      let user = await User.update(newValues, {
+        where: {id: userId}
+      });
+      if (user[0] === 0) throw new Error('User not found.');
+      return user;
+    } catch (e) {
+      return e;
+    }
   }
 
   /**
@@ -63,15 +66,29 @@ class UserService {
    * @return {object[]} user - An array of users
    */
   async List(){
-    let users = await User.findAll({});
-    return users;
+    try {
+      let users = await User.findAll({});
+      return users;
+    } catch (e) {
+      return e;
+    }
   }
 
+  /**
+   * Update a user
+   * @params {string} userId - The _id of the user
+   * @return {number/error} 1 or error - "User not found."
+   */
   async Remove(userId){
-    let userRemoved = await User.destroy({
-      where: {id: userId},
-    });
-    return userRemoved;
+    try {
+      let userRemoved = await User.destroy({
+        where: {id: userId},
+      });
+      if (userRemoved === 0) throw new Error('User not found.');
+      return userRemoved;
+    } catch (e) {
+      return e;
+    }
   }
 
 }
