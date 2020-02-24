@@ -1,4 +1,3 @@
-
 const httpStatus = require('http-status');
 const APIError = require('../helpers/APIError');
 
@@ -13,15 +12,10 @@ const UserService = require('./user.service');
  * @returns {User}
  */
 async function create(req, res, next) {
-  let UserServiceInstance = new UserService();
-  const newUser = {
-    username: req.body.username,
-    password: req.body.password,
-    permissions: req.body.permissions
-  };
+  const newUser = req.body;
 
   try {
-    const savedUser = await UserServiceInstance.Create(newUser);
+    const savedUser = await UserService.Create(newUser);
 
     // Example of other services and logic that can be called during hit to endpoint
     // const EmailServiceInstance = new EmailService();
@@ -29,7 +23,7 @@ async function create(req, res, next) {
 
     return res.json( savedUser );
   } catch (e) {
-    return res.json(e)
+    return next(e);
   }
 
 }
@@ -40,17 +34,17 @@ async function create(req, res, next) {
  * @returns {User}
  */
 async function get(req, res, next) {
-  let UserServiceInstance = new UserService();
   const userId = req.params.userId;
 
   try {
-    const user = await UserServiceInstance.GetUser(userId);
+    const user = await UserService.GetItem(userId);
+    if (user instanceof Error) {
+      throw new APIError(user.message, httpStatus.NOT_FOUND, true);
+    }
     return res.json(user);
   } catch (e) {
-    const error = new APIError('User Not Found', httpStatus.NOT_FOUND, true);
-    return next(error);
+    return next(e);
   }
-
 }
 
 /**
@@ -60,15 +54,17 @@ async function get(req, res, next) {
  * @returns {User}
  */
 async function update(req, res, next) {
-  let UserServiceInstance = new UserService();
   const userId = req.params.userId;
   const newValues = req.body;
 
   try {
-    const updatedUser = await UserServiceInstance.Update(userId, newValues);
+    const updatedUser = await UserService.Update(userId, newValues);
+    if (updatedUser instanceof Error) {
+      throw new APIError(updatedUser.message, httpStatus.NOT_FOUND, true);
+    }
     return res.json(updatedUser);
   } catch (e) {
-    return res.json(e)
+    return next(e);
   }
 
 }
@@ -80,12 +76,11 @@ async function update(req, res, next) {
  * @returns {User[]}
  */
 async function list(req, res, next) {
-  let UserServiceInstance = new UserService();
   try {
-    const userList = await UserServiceInstance.List();
+    const userList = await UserService.List();
     return res.json(userList);
   } catch (e) {
-    return res.json(e)
+    return next(e);
   }
 
 }
@@ -96,16 +91,73 @@ async function list(req, res, next) {
  * @returns {User}
  */
 async function remove(req, res, next) {
-  let UserServiceInstance = new UserService();
   const userId = req.params.userId;
 
   try {
-    const userRemoved = await UserServiceInstance.Remove(userId);
+    const userRemoved = await UserService.Remove(userId);
     return res.json(userRemoved);
   } catch (e) {
-    return res.json(e)
+    return next(e);
   }
 
 }
 
-module.exports = { create, get, update, list, remove};
+/**
+ * Add a permission to an existing user
+ * @property {string} req.params.userId - The id of user.
+ * @property {object} req.body.permission - Object containing a string with the new permission for the user.
+ * @returns {User}
+ */
+async function addPermission(req, res, next) {
+  const userId = req.params.userId;
+  const permission = req.body.permission;
+
+  try {
+    const newPermission = await UserService.AddUserPermission(userId, permission);
+    if (newPermission instanceof Error) {
+      throw new APIError(newPermission.message, httpStatus.NOT_FOUND, true);
+    }
+    return res.json(newPermission);
+  } catch (e) {
+    return next(e);
+  }
+
+}
+
+/**
+ * Get permissions for an existing user
+ * @property {string} req.params.userId - The _id of user.
+ * @returns {User}
+ */
+async function getPermissions(req, res, next) {
+  const userId = req.params.userId;
+
+  try {
+    const permissions = await UserService.GetUserPermissions(userId);
+    if (permissions instanceof Error) {
+      throw new APIError(permissions.message, httpStatus.NOT_FOUND, true);
+    }
+    return res.json(permissions);
+  } catch (e) {
+    return next(e);
+  }
+
+}
+
+async function removePermission(req, res, next) {
+  const userId = req.params.userId;
+  const permission = req.body.permission;
+
+  try {
+    const removePermission = await UserService.RemoveUserPermission(userId, permission);
+    if (removePermission instanceof Error) {
+      throw new APIError(removePermission.message, httpStatus.NOT_FOUND, true);
+    }
+    return res.json(removePermission);
+  } catch (e) {
+    return next(e);
+  }
+
+}
+
+module.exports = { create, get, update, list, remove, addPermission, getPermissions, removePermission};

@@ -49,7 +49,8 @@ class DbService {
         where: {id: itemId}
       });
       if (item[0] === 0) throw new Error(this.componentName + ' not found.');
-      return item;
+      let updatedItem = await this.model.findByPk(itemId);
+      return updatedItem;
     } catch (e) {
       return e;
     }

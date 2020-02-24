@@ -22,7 +22,6 @@ class UserService extends DbService {
       user.Permissions.forEach((item) => {
         permissions.push(item.role);
       });
-
       return permissions;
     } catch (e) {
       return e;
@@ -34,7 +33,6 @@ class UserService extends DbService {
       const user = await this.model.findByPk(userId, {include: models.Permission});
       if (!user) throw new Error('User not found.');
       const newPermission = await user.createPermission({ role: permission });
-
       return newPermission;
     } catch (e) {
       return e;

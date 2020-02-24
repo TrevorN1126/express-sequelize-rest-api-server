@@ -82,9 +82,7 @@ describe('## User Service', () => {
   describe('# Update', () => {
     it('It should update a user with new values', async function() {
       const updatedUser = await UserService.Update(userTest.id, userUpdated);
-      expect(updatedUser[0]).to.equal(1);
-      const checkUpdatedUser = await UserService.GetItem(userTest.id);
-      expect(checkUpdatedUser.username).to.equal(userUpdated.username);
+      expect(updatedUser.username).to.equal(userUpdated.username);
     });
     it('It should return an Error - User not found.', async function() {
       const updatedNonUser = await UserService.Update(69696969, userUpdated);

@@ -23,4 +23,14 @@ router.route('/:userId')
   /** DELETE /api/users/:userId - Delete user */
   .delete(protectRoute(['Admin']), UserController.remove);
 
+router.route('/:userId/permissions')
+  /** GET /api/users/:userId/permissions - Add user permission */
+  .get(protectRoute(['Admin']), UserController.getPermissions)
+
+  /** GET /api/users/:userId/permissions - get user permissions */
+  .post(protectRoute(['Admin']), UserController.addPermission)
+
+  /** DELETE /api/users/:userId/permissions - Delete user permission */
+  .delete(protectRoute(['Admin']), UserController.removePermission)
+
 module.exports = router;
