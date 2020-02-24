@@ -3,7 +3,7 @@ const logger = require('morgan');
 const httpStatus = require('http-status');
 const expressWinston = require('express-winston');
 const expressValidation = require('express-validation');
-const commonMiddleware = require('./config/common-middleware');
+const commonMiddleware = require('./server/middleware/common-middleware');
 
 const config = require('./config/config');
 const winstonInstance = require('./config/winston');
