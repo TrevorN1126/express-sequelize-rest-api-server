@@ -1,91 +1,57 @@
 /**
- * @file user.service.js Service for the user component
- */
+* @file user.service.js Service for the user component
+*/
+const DbService = require('../helpers/baseDbService');
 const models = require('../db/models');
 const User = models.User;
 
 /**
- * @classdesc Creates a new UserService.
- *
- */
-class UserService {
-
-  /**
-   * Create a new user
-   * @params {object} user - Object representing a new user
-   * @return {object} user
-   */
-  async Create(user) {
-    try {
-
-      const userRecord = await User.create(user);
-      return  userRecord;
-
-    } catch (e) {
-      return new Error(e.message);
-    }
-
+* @classdesc Creates a new UserService.
+*
+*/
+class UserService extends DbService {
+  constructor(componentName, model) {
+    super(componentName, model);
   }
 
-  /**
-   * Get a user
-   * @params {string} userId - The _id of the user
-   * @return {object} user
-   */
-  async GetUser(userId){
+  async GetUserPermissions(userId){
     try {
-      let user = await User.findByPk(userId, {include: models.Permission});
+      const user = await this.model.findByPk(userId, {include: models.Permission});
       if (!user) throw new Error('User not found.');
-      return user;
-    } catch (e) {
-      return e;
-    }
-
-  }
-
-  /**
-   * Update a user
-   * @params {string} userId - The _id of the user
-   * @params {object} user - TThe new values for the user
-   * @return {object} user
-   */
-  async Update(userId, newValues) {
-    try {
-      let user = await User.update(newValues, {
-        where: {id: userId}
+      const permissions = [];
+      user.Permissions.forEach((item) => {
+        permissions.push(item.role);
       });
-      if (user[0] === 0) throw new Error('User not found.');
-      return user;
+
+      return permissions;
     } catch (e) {
       return e;
     }
   }
 
-  /**
-   * Get a list of all users
-   * @return {object[]} user - An array of users
-   */
-  async List(){
+  async AddUserPermission(userId, permission){
     try {
-      let users = await User.findAll({});
-      return users;
+      const user = await this.model.findByPk(userId, {include: models.Permission});
+      if (!user) throw new Error('User not found.');
+      const newPermission = await user.createPermission({ role: permission });
+
+      return newPermission;
     } catch (e) {
       return e;
     }
   }
 
-  /**
-   * Update a user
-   * @params {string} userId - The _id of the user
-   * @return {number/error} 1 or error - "User not found."
-   */
-  async Remove(userId){
+  async RemoveUserPermission(userId, permission){
     try {
-      let userRemoved = await User.destroy({
-        where: {id: userId},
+      const removedPermission = await models.Permission.destroy({
+        where:
+          {
+            UserId: userId,
+            role: permission
+          }
       });
-      if (userRemoved === 0) throw new Error('User not found.');
-      return userRemoved;
+
+      return removedPermission;
     } catch (e) {
       return e;
     }
@@ -93,4 +59,4 @@ class UserService {
 
 }
 
-module.exports = UserService;
+module.exports = new UserService('User', User);
