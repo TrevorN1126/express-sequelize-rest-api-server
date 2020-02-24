@@ -41,7 +41,7 @@ describe('## User APIs', () => {
       expect(res.body).to.have.property('token');
       admin.token += res.body.token;
       expect(res.body).to.have.property('user');
-      admin.id += res.body.user._id;
+      admin.id = res.body.user.id;
     });
 
   });

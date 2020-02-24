@@ -44,9 +44,15 @@ Set environment (vars):
 cp .env.example .env
 ```
 
+* Make sure the database server is running and the databases defined in config/database.json are already created
 Create db tables
 ```sh
 npx sequelize-cli db:migrate
+```
+
+Seed db tables
+```sh
+npx sequelize-cli db:seed:all
 ```
 
 Start server:
@@ -70,6 +76,9 @@ yarn test
 
 # Run tests on file change
 yarn test:watch
+
+# Run test coverage
+yarn test:coverage
 
 ```
 
