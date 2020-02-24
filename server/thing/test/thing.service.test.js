@@ -3,12 +3,19 @@ const { expect, assert } = chai;
 
 const ThingService = require('../thing.service');
 
+const admin = {
+  username: 'TestAdmin',
+  password: 'password',
+  id: 1,
+};
+
 const badThing = {
   description: 'Thing without the required name'
 };
 let goodThing = {
   name: 'The Good Thing',
-  description: 'The Good Thing Description'
+  description: 'The Good Thing Description',
+  UserId: admin.id
 };
 let updatedGoodThing = {
   name: 'The Updated Good Thing',
@@ -19,7 +26,6 @@ const fakeId = 696969696969;
 describe('## Thing Service', () => {
 
   describe('# Create', () => {
-
     it('It should return a validation error', async function() {
       const newBadThing = await ThingService.Create(badThing);
       expect(newBadThing).to.be.instanceOf(Error);

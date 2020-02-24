@@ -3,6 +3,7 @@
 const User = require('../models').User;
 
 let users = [{
+  id: 1,
   firstName: 'John',
   lastName: 'Doe',
   username: 'TestAdmin',
