@@ -1,6 +1,5 @@
 const chai = require('chai'); // eslint-disable-line import/newline-after-import
 const { expect, assert } = chai;
-chai.use(require('chai-as-promised'))
 
 const UserService = require('../user.service');
 
