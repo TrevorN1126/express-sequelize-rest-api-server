@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Permission = sequelize.define('Permission', {
-    role: DataTypes.STRING
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {});
   Permission.associate = function (models) {
     models.Permission.belongsTo(models.User, {

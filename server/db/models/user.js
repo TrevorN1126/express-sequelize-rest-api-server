@@ -11,13 +11,27 @@ const hashPasswordHook = async (user, options) => {
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password: DataTypes.STRING
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {});
   User.associate = function(models) {
     models.User.hasMany(models.Permission);
+    models.User.hasMany(models.Thing);
   };
   User.beforeCreate( hashPasswordHook );
   User.beforeUpdate( hashPasswordHook );
