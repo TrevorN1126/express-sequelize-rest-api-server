@@ -14,8 +14,8 @@ const ThingService = require('./thing.service');
 
     try {
       const savedThing = await ThingService.Create(newThing);
-      if (thing.message) {
-        throw new APIError(thing.message, httpStatus.NOT_FOUND, true);
+      if (savedThing.message) {
+        throw new APIError(savedThing.message, httpStatus.NOT_FOUND, true);
       }
       return res.json( savedThing );
     } catch (e) {
@@ -33,7 +33,7 @@ const ThingService = require('./thing.service');
     const thingId = req.params.thingId;
 
     try {
-      const thing = await ThingService.GetById(thingId);
+      const thing = await ThingService.GetItem(thingId);
       if (thing.message) {
         throw new APIError(thing.message, httpStatus.NOT_FOUND, true);
       }
