@@ -1,6 +1,7 @@
 const DbService = require('../helpers/baseDbService');
 const models = require('../db/models');
-const Thing = models.Thing;
+
+const { Thing } = models;
 
 /**
  * Creates a new ThingService.

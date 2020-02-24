@@ -1,4 +1,4 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   const Thing = sequelize.define('Thing', {
     name: {
@@ -7,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: DataTypes.STRING
   }, {});
-  Thing.associate = function(models) {
+  Thing.associate = function (models) {
     models.Thing.belongsTo(models.User, {
-      onDelete: "CASCADE",
+      onDelete: 'CASCADE',
       foreignKey: {
         allowNull: false
       }

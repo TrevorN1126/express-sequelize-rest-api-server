@@ -31,6 +31,6 @@ router.route('/:userId/permissions')
   .post(protectRoute(['Admin']), UserController.addPermission)
 
   /** DELETE /api/users/:userId/permissions - Delete user permission */
-  .delete(protectRoute(['Admin']), UserController.removePermission)
+  .delete(protectRoute(['Admin']), UserController.removePermission);
 
 module.exports = router;

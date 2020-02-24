@@ -1,8 +1,7 @@
-'use strict';
 
-const User = require('../models').User;
+const { User } = require('../models');
 
-let users = [{
+const users = [{
   id: 1,
   firstName: 'John',
   lastName: 'Doe',
@@ -13,14 +12,10 @@ let users = [{
 }];
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return User.bulkCreate( users,
-      {
-        validate: true,
-        individualHooks: true
-      });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Users', null, {});
-  }
+  up: (queryInterface, Sequelize) => User.bulkCreate(users,
+    {
+      validate: true,
+      individualHooks: true
+    }),
+  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Users', null, {})
 };

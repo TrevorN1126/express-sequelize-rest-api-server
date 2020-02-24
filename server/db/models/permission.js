@@ -1,4 +1,4 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   const Permission = sequelize.define('Permission', {
     role: {
@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Permission.associate = function (models) {
     models.Permission.belongsTo(models.User, {
-      onDelete: "CASCADE",
+      onDelete: 'CASCADE',
       foreignKey: {
         allowNull: false
       }
