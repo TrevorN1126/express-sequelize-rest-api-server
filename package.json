@@ -46,7 +46,6 @@
     "path": "false0.12.7",
     "sequelize": "false5.21.4",
     "sequelize-cli": "false5.5.1",
-    "sqlite3": "false4.1.1",
     "winston": "3.2.1"
   },
   "devDependencies": {

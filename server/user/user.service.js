@@ -6,12 +6,12 @@ const models = require('../db/models');
 const User = models.User;
 
 /**
-* @classdesc Creates a new UserService.
-*
+* Creates a new UserService.
+* @extends DbService
 */
 class UserService extends DbService {
-  constructor(componentName, model) {
-    super(componentName, model);
+  constructor(componentName, models) {
+    super(componentName, models);
   }
 
   async GetUserPermissions(userId){
@@ -57,4 +57,4 @@ class UserService extends DbService {
 
 }
 
-module.exports = new UserService('User', User);
+module.exports = new UserService('User', models);

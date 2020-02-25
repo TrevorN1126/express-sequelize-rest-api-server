@@ -3,9 +3,15 @@
  * @class
  */
 class DbService {
-  constructor(componentName, model) {
+  /**
+   * Creates a database service
+   * @param {string} componentName - The name of the component being used
+   * @param {object} models - All database models
+   */
+  constructor(componentName, models) {
     this.componentName = componentName;
-    this.model = model;
+    this.models = models;
+    this.model = models[componentName];
   }
 
   /**
