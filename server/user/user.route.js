@@ -8,6 +8,7 @@ const validate = require('express-validation');
 const paramValidation = require('../../config/param-validation');
 const UserController = require('./user.controller');
 const protectRoute = require('../middleware/protectRoute');
+
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/')
@@ -16,7 +17,8 @@ router.route('/')
   *
   * @name User List
   * @path {GET} /api/users
-  * @auth This route requires a token with Admin permission. If authentication fails it will return a 401 error.
+  * @auth This route requires a token with Admin permission.
+  * If authentication fails it will return a 401 error.
   */
   .get(protectRoute(['Admin']), UserController.list)
 
@@ -25,7 +27,8 @@ router.route('/')
   *
   * @name Create User
   * @path {POST} /api/users
-  * @auth This route requires a token with Admin permission. If authentication fails it will return a 401 error.
+  * @auth This route requires a token with Admin permission.
+  * If authentication fails it will return a 401 error.
   * @body {object} User is an object containing the required fields
   * @code {200} If the request is successful.
   * @response {Object} User Return the newly created user.
@@ -39,7 +42,8 @@ router.route('/:userId')
   *
   * @name Get User
   * @path {POST} /api/users/:userId
-  * @auth This route requires a token with Admin permission. If authentication fails it will return a 401 error.
+  * @auth This route requires a token with Admin permission.
+  * If authentication fails it will return a 401 error.
   * @params {String} :userId is the unique identifier for the user.
   * @code {200} if the request is successful.
   * @response {Object} User Return the user.
@@ -54,7 +58,8 @@ router.route('/:userId')
   *
   * @name Update User
   * @path {PUT} /api/users/:userId
-  * @auth This route requires a token with Admin permission. If authentication fails it will return a 401 error.
+  * @auth This route requires a token with Admin permission.
+  * If authentication fails it will return a 401 error.
   * @body {object} User is an object containing the new user fields.
   * @params {String} :userId is the unique identifier for the user.
   */

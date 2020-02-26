@@ -24,11 +24,10 @@ async function create(req, res, next) {
     // const EmailServiceInstance = new EmailService();
     // await EmailServiceInstance.startSignupSequence(savedUser);
 
-    return res.json( savedUser );
+    return res.json(savedUser);
   } catch (e) {
     return next(e);
   }
-
 }
 
 /**
@@ -37,7 +36,7 @@ async function create(req, res, next) {
  * @returns {User}
  */
 async function get(req, res, next) {
-  const userId = req.params.userId;
+  const { userId } = req.params;
 
   try {
     const user = await UserService.GetItem(userId);
@@ -57,7 +56,7 @@ async function get(req, res, next) {
  * @returns {User}
  */
 async function update(req, res, next) {
-  const userId = req.params.userId;
+  const { userId } = req.params;
   const newValues = req.body;
 
   try {
@@ -69,7 +68,6 @@ async function update(req, res, next) {
   } catch (e) {
     return next(e);
   }
-
 }
 
 /**
@@ -85,7 +83,6 @@ async function list(req, res, next) {
   } catch (e) {
     return next(e);
   }
-
 }
 
 /**
@@ -94,7 +91,7 @@ async function list(req, res, next) {
  * @returns {User}
  */
 async function remove(req, res, next) {
-  const userId = req.params.userId;
+  const { userId } = req.params;
 
   try {
     const userRemoved = await UserService.Remove(userId);
@@ -102,18 +99,17 @@ async function remove(req, res, next) {
   } catch (e) {
     return next(e);
   }
-
 }
 
 /**
  * Add a permission to an existing user
  * @property {string} req.params.userId - The id of user.
- * @property {object} req.body.permission - Object containing a string with the new permission for the user.
+ * @property {String} req.body.permission - a string with the new permission for the user.
  * @returns {User}
  */
 async function addPermission(req, res, next) {
-  const userId = req.params.userId;
-  const permission = req.body.permission;
+  const { userId } = req.params;
+  const { permission } = req.body;
 
   try {
     const newPermission = await UserService.AddUserPermission(userId, permission);
@@ -124,7 +120,6 @@ async function addPermission(req, res, next) {
   } catch (e) {
     return next(e);
   }
-
 }
 
 /**
@@ -133,7 +128,7 @@ async function addPermission(req, res, next) {
  * @returns {User}
  */
 async function getPermissions(req, res, next) {
-  const userId = req.params.userId;
+  const { userId } = req.params;
 
   try {
     const permissions = await UserService.GetUserPermissions(userId);
@@ -144,23 +139,23 @@ async function getPermissions(req, res, next) {
   } catch (e) {
     return next(e);
   }
-
 }
 
 async function removePermission(req, res, next) {
-  const userId = req.params.userId;
-  const permission = req.body.permission;
+  const { userId } = req.params;
+  const { permission } = req.body;
 
   try {
-    const removePermission = await UserService.RemoveUserPermission(userId, permission);
-    if (removePermission instanceof Error) {
-      throw new APIError(removePermission.message, httpStatus.NOT_FOUND, true);
+    const removeUserPermission = await UserService.RemoveUserPermission(userId, permission);
+    if (removeUserPermission instanceof Error) {
+      throw new APIError(removeUserPermission.message, httpStatus.NOT_FOUND, true);
     }
-    return res.json(removePermission);
+    return res.json(removeUserPermission);
   } catch (e) {
     return next(e);
   }
-
 }
 
-module.exports = { create, get, update, list, remove, addPermission, getPermissions, removePermission};
+module.exports = {
+  create, get, update, list, remove, addPermission, getPermissions, removePermission
+};

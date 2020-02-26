@@ -15,13 +15,13 @@ const AuthService = require('./auth.service');
 * @returns {*}
 */
 async function login(req, res, next) {
-  const username = req.body.username;
-  const password = req.body.password;
+  const { username } = req.body;
+  const { password } = req.body;
 
   try {
     const userAuth = await AuthService.Login(username, password);
-    if (!userAuth.success) throw new APIError('Authentication failed. ' + userAuth.message, httpStatus.UNAUTHORIZED, true);
-    return res.json( userAuth );
+    if (!userAuth.success) throw new APIError(`Authentication failed. ${userAuth.message}`, httpStatus.UNAUTHORIZED, true);
+    return res.json(userAuth);
   } catch (e) {
     return next(e);
   }
@@ -40,7 +40,6 @@ function getRandomNumber(req, res) {
     num: Math.random() * 100
   });
 }
-
 
 
 module.exports = { login, getRandomNumber };

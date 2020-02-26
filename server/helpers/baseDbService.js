@@ -22,9 +22,9 @@ class DbService {
   async Create(item) {
     try {
       const itemRecord = await this.model.create(item);
-      return  itemRecord;
+      return itemRecord;
     } catch (e) {
-      return new Error(e.message);
+      return e;
     }
   }
 
@@ -33,10 +33,10 @@ class DbService {
    * @params {string} itemId - The _id of the item
    * @return {object|Error} item
    */
-  async GetItem(itemId){
+  async GetItem(itemId) {
     try {
-      let item = await this.model.findByPk(itemId);
-      if (!item) throw new Error(this.componentName + ' not found.');
+      const item = await this.model.findByPk(itemId);
+      if (!item) throw new Error(`${this.componentName} not found.`);
       return item;
     } catch (e) {
       return e;
@@ -51,11 +51,11 @@ class DbService {
    */
   async Update(itemId, newValues) {
     try {
-      let item = await this.model.update(newValues, {
-        where: {id: itemId}
+      const item = await this.model.update(newValues, {
+        where: { id: itemId }
       });
-      if (item[0] === 0) throw new Error(this.componentName + ' not found.');
-      let updatedItem = await this.model.findByPk(itemId);
+      if (item[0] === 0) throw new Error(`${this.componentName} not found.`);
+      const updatedItem = await this.model.findByPk(itemId);
       return updatedItem;
     } catch (e) {
       return e;
@@ -66,9 +66,9 @@ class DbService {
    * Get a list of all items
    * @return {object[]} item - An array of items
    */
-  async List(){
+  async List() {
     try {
-      let items = await this.model.findAll({});
+      const items = await this.model.findAll({});
       return items;
     } catch (e) {
       return e;
@@ -80,18 +80,17 @@ class DbService {
    * @params {string} itemId - The _id of the item
    * @return {number|Error} 1 or error - "Item not found."
    */
-  async Remove(itemId){
+  async Remove(itemId) {
     try {
-      let itemRemoved = await this.model.destroy({
-        where: {id: itemId},
+      const itemRemoved = await this.model.destroy({
+        where: { id: itemId },
       });
-      if (itemRemoved === 0) throw new Error(this.componentName + ' not found.');
+      if (itemRemoved === 0) throw new Error(`${this.componentName} not found.`);
       return itemRemoved;
     } catch (e) {
       return e;
     }
   }
-
 }
 
 module.exports = DbService;

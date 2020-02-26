@@ -1,12 +1,11 @@
-'use strict';
 const bcrypt = require('bcrypt');
 
 const SALT_WORK_FACTOR = 10;
 
-const hashPasswordHook = async (user, options) => {
+const hashPasswordHook = async (user) => {
   if (!user.changed('password')) return;
   const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
-  user.password = await bcrypt.hash(user.password, salt);
+  user.password = await bcrypt.hash(user.password, salt); // eslint-disable-line no-param-reassign
 };
 
 module.exports = (sequelize, DataTypes) => {
@@ -29,14 +28,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {});
-  User.associate = function(models) {
+  User.associate = function associate(models) {
     models.User.hasMany(models.Permission);
     models.User.hasMany(models.Thing);
   };
-  User.beforeCreate( hashPasswordHook );
-  User.beforeUpdate( hashPasswordHook );
-  User.prototype.validPassword = async function(password) {
-    return await bcrypt.compare(password, this.password);
-  }
+  User.beforeCreate(hashPasswordHook);
+  User.beforeUpdate(hashPasswordHook);
+  User.prototype.validPassword = async (password) => {
+    const result = await bcrypt.compare(password, this.password);
+    return result;
+  };
   return User;
 };

@@ -5,10 +5,6 @@ const models = require('../db/models');
  * Creates a new ThingService.
  * @extends DbService
  */
-class ThingService extends DbService {
-  constructor(componentName, models) {
-    super(componentName, models);
-  }
-}
+class ThingService extends DbService {}
 
 module.exports = new ThingService('Thing', models);

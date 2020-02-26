@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: DataTypes.STRING
   }, {});
-  Thing.associate = function (models) {
+  Thing.associate = function associate(models) {
     models.Thing.belongsTo(models.User, {
       onDelete: 'CASCADE',
       foreignKey: {

@@ -6,7 +6,7 @@ const app = require('../../../app');
 
 chai.config.includeStack = true;
 
-let admin = {
+const admin = {
   username: 'TestAdmin',
   password: 'password',
   id: 1,
@@ -19,7 +19,7 @@ let newThing = {
   UserId: 1
 };
 
-let updateThing = {
+const updateThing = {
   name: 'newTestThing1',
   description: 'description of newTestThing1'
 };
@@ -30,7 +30,6 @@ const badThing = {
 
 
 describe('## Thing Routes', () => {
-
   before(async () => {
     await request(app)
       .post('/api/auth/login')
@@ -42,7 +41,6 @@ describe('## Thing Routes', () => {
         expect(res.body).to.have.property('user');
         admin.id = res.body.user.id;
       });
-
   });
 
   describe('# GET /api/things', () => {
@@ -85,22 +83,6 @@ describe('## Thing Routes', () => {
         })
         .catch(done);
     });
-
-    // it('It should report an Error - ', (done) => {
-    //   request(app)
-    //     .post('/api/things')
-    //     .set('Authorization', admin.token)
-    //     .send(badThing)
-    //     .expect(httpStatus.OK)
-    //     .then((res) => {
-    //       expect(res.body.name).to.equal(newThing.name);
-    //       newThing = res.body;
-    //       done();
-    //     })
-    //     .catch(done);
-    // });
-
-
   });
 
   describe('# GET /api/things/:thingId', () => {

@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {});
-  Permission.associate = function (models) {
+  Permission.associate = function associate(models) {
     models.Permission.belongsTo(models.User, {
       onDelete: 'CASCADE',
       foreignKey: {

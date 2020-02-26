@@ -8,7 +8,8 @@ const validate = require('express-validation');
 const paramValidation = require('../../config/param-validation');
 const AuthController = require('./auth.controller');
 const protectRoute = require('../middleware/protectRoute');
-const router = express.Router(); // eslint-disable-line new-cap
+
+const router = express.Router();
 
 router.route('/login')
   /**
@@ -31,15 +32,14 @@ router.route('/login')
   */
   .post(validate(paramValidation.login), AuthController.login);
 
-/** GET /api/auth/random-number - Protected route,
- * needs token returned by the above as header. Authorization: Bearer {token} */
 router.route('/random-number')
   /**
   * Get a random number
   *
   * @name Random Number
   * @path {GET} /api/auth/random-number
-  * @auth This route requires a valid token with no permissions. If authentication fails it will return a 401 error.
+  * @auth This route requires a valid token with no permissions.
+  * If authentication fails it will return a 401 error.
   * @header {String} Authorization Requires a 'Bearer Token' with a valid token.
   * @code {200} If the request is successful.
   * @response {Object} object

@@ -8,6 +8,7 @@ const validate = require('express-validation');
 const paramValidation = require('../../config/param-validation');
 const ThingController = require('./thing.controller');
 const protectRoute = require('../middleware/protectRoute');
+
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/')
@@ -16,7 +17,8 @@ router.route('/')
   *
   * @name Thing List
   * @path {GET} /api/things
-  * @auth This route requires a token with Admin permission. If authentication fails it will return a 401 error.
+  * @auth This route requires a token with Admin permission.
+  * If authentication fails it will return a 401 error.
   */
   .get(ThingController.list)
 

@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Permissions', {
     id: {

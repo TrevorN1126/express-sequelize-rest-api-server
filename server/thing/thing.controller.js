@@ -18,14 +18,13 @@ async function create(req, res, next) {
 
   try {
     const savedThing = await ThingService.Create(newThing);
-    if (savedThing.message) {
-      throw new APIError(savedThing.message, httpStatus.NOT_FOUND, true);
+    if (savedThing instanceof Error) {
+      throw new APIError(savedThing.name, httpStatus.BAD_REQUEST, true);
     }
-    return res.json( savedThing );
+    return res.json(savedThing);
   } catch (e) {
     return next(e);
   }
-
 }
 
 /**
@@ -34,7 +33,7 @@ async function create(req, res, next) {
 * @returns {Thing}
 */
 async function get(req, res, next) {
-  const thingId = req.params.thingId;
+  const { thingId } = req.params;
 
   try {
     const thing = await ThingService.GetItem(thingId);
@@ -54,16 +53,15 @@ async function get(req, res, next) {
 * @returns {Thing}
 */
 async function update(req, res, next) {
-  const thingId = req.params.thingId;
+  const { thingId } = req.params;
   const newValues = req.body;
 
   try {
     const updatedThing = await ThingService.Update(thingId, newValues);
     return res.json(updatedThing);
   } catch (e) {
-    return next(error);
+    return next(e);
   }
-
 }
 
 /**
@@ -71,14 +69,12 @@ async function update(req, res, next) {
 * @returns {Thing[]}
 */
 async function list(req, res, next) {
-
   try {
     const thingList = await ThingService.List();
     return res.json(thingList);
   } catch (e) {
     return next(e);
   }
-
 }
 
 /**
@@ -86,7 +82,7 @@ async function list(req, res, next) {
 * @returns {Thing}
 */
 async function remove(req, res, next) {
-  const thingId = req.params.thingId;
+  const { thingId } = req.params;
 
   try {
     const thingRemoved = await ThingService.Remove(thingId);
@@ -94,8 +90,9 @@ async function remove(req, res, next) {
   } catch (e) {
     return next(e);
   }
-
 }
 
 
-module.exports = { create, get, update, list, remove };
+module.exports = {
+  create, get, update, list, remove
+};
