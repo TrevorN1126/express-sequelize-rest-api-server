@@ -1,0 +1,9 @@
+{
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js",
+      "express-sequelize-rest-api-server/server/db/migrations/*.js",
+      "/seeders/*"
+    ]
+  }
+}

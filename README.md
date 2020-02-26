@@ -27,8 +27,8 @@ Created with attempting to follow [Node.js Best Practices](https://github.com/go
 
 Clone the repo:
 ```sh
-git clone https://github.com/TrevorN1126/express-seq-rest-api-server.git
-cd express-seq-rest-api-server
+git clone https://github.com/TrevorN1126/express-sequelize-rest-api-server.git
+cd express-sequelize-rest-api-server
 ```
 
 Install yarn:
@@ -66,7 +66,7 @@ yarn start
 yarn start-dev
 
 # Selectively set DEBUG env var to get logs
-DEBUG=express-seq-rest-api-server:* yarn start
+DEBUG=express-sequelize-rest-api-server:* yarn start
 ```
 Refer [debug](https://www.npmjs.com/package/debug) to know how to selectively turn on logs.
 
