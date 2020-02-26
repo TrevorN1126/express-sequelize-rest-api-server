@@ -1,8 +1,11 @@
+/**
+* Controller for the user component
+* @module User Controller
+*/
+
 const httpStatus = require('http-status');
 const APIError = require('../helpers/APIError');
-
 const UserService = require('./user.service');
-
 
 /**
  * Create new user

@@ -5,7 +5,7 @@ const config = require('../../config/config');
 const models  = require('../db/models');
 
 /**
-* Creates a new ThingService.
+* Creates a new AuthService.
 * @class
 */
 class AuthService {

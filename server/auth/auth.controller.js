@@ -1,8 +1,11 @@
+/**
+* Controller for the auth component
+* @module Auth Controller
+*/
+
 const httpStatus = require('http-status');
 const APIError = require('../helpers/APIError');
-
 const AuthService = require('./auth.service');
-
 
 /**
 * Returns jwt token if username is stored in the databse and the password matches
@@ -34,7 +37,6 @@ function getRandomNumber(req, res) {
   // req.user is assigned by jwt middleware if valid token is provided
   // if (req.)
   return res.json({
-    user: req.user,
     num: Math.random() * 100
   });
 }

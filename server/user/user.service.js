@@ -1,6 +1,3 @@
-/**
-* @file user.service.js Service for the user component
-*/
 const DbService = require('../helpers/baseDbService');
 const models = require('../db/models');
 const User = models.User;
@@ -14,6 +11,11 @@ class UserService extends DbService {
     super(componentName, models);
   }
 
+  /**
+   * Get the users permissions
+   * @params {int} userId - the id of the user
+   * @return {Array|Error} returns an array of strings representing the users permissions or an Error
+   */
   async GetUserPermissions(userId){
     try {
       const user = await this.model.findByPk(userId, {include: models.Permission});
@@ -28,6 +30,12 @@ class UserService extends DbService {
     }
   }
 
+  /**
+   * Add a permissions to a user
+   * @params {int} userId - the id of the user
+   * @params {string} - The name of the permission to add
+   * @return {object|Error} returns the new permission
+   */
   async AddUserPermission(userId, permission){
     try {
       const user = await this.model.findByPk(userId, {include: models.Permission});
@@ -39,6 +47,12 @@ class UserService extends DbService {
     }
   }
 
+  /**
+   * remove a permissions from a user
+   * @params {int} userId - the id of the user
+   * @params {string} - The name of the permission to add
+   * @return {int|Error} returns 1 or error
+   */
   async RemoveUserPermission(userId, permission){
     try {
       const removedPermission = await models.Permission.destroy({

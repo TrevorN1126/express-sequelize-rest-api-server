@@ -17,7 +17,7 @@ class DbService {
   /**
    * Create a new item
    * @params {object} item - Object representing a new item
-   * @return {object} item
+   * @return {object|Error} item - return the item or an Error with the error message
    */
   async Create(item) {
     try {
@@ -31,7 +31,7 @@ class DbService {
   /**
    * Get a item
    * @params {string} itemId - The _id of the item
-   * @return {object} item
+   * @return {object|Error} item
    */
   async GetItem(itemId){
     try {
@@ -47,7 +47,7 @@ class DbService {
    * Update a item
    * @params {string} itemId - The _id of the item
    * @params {object} item - TThe new values for the item
-   * @return {object} item
+   * @return {object|Error} item
    */
   async Update(itemId, newValues) {
     try {
@@ -78,7 +78,7 @@ class DbService {
   /**
    * Update a item
    * @params {string} itemId - The _id of the item
-   * @return {number/error} 1 or error - "Item not found."
+   * @return {number|Error} 1 or error - "Item not found."
    */
   async Remove(itemId){
     try {
