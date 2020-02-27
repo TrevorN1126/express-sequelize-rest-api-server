@@ -8,4 +8,9 @@ cache:
   - node_modules
 git:
   depth: 3
-after_success: yarn coverage
+script:
+  - cp .env.example .env
+  - npx sequelize-cli db:migrate
+  - npx sequelize-cli db:seed:all
+after_success:
+  - yarn coverage
