@@ -103,7 +103,6 @@ describe('## Thing Routes', () => {
         .set('Authorization', admin.token)
         .expect(httpStatus.NOT_FOUND)
         .then((res) => {
-          // console.log(res.body);
           expect(res.body.message).to.equal('Thing not found.');
           done();
         })

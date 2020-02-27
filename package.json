@@ -18,6 +18,7 @@
     "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --ui bdd --reporter spec --colors server --recursive",
     "test:watch": "yarn test -- --watch",
     "test:coverage": "nyc --reporter=lcov --reporter=text yarn test",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "docs": "./node_modules/.bin/jsdoc server -t ./node_modules/ink-docstrap/template -R README.md -r -d docs -c jsdoc.conf"
   },
   "dependencies": {
@@ -52,7 +53,7 @@
     "chai": "4.2.0",
     "chai-as-promised": "false7.1.1",
     "commitizen": "^4.0.3",
-    "coveralls": "^3.0.9",
+    "coveralls": "false3.0.9",
     "cross-env": "7.0.0",
     "cz-conventional-changelog": "3.1.0",
     "eslint": "6.8.0",
@@ -77,5 +78,8 @@
     "hooks": {
       "pre-commit": "yarn test"
     }
+  },
+  "nyc": {
+  "exclude": [ "**/migrations/*.js", "**/seeders/*.js" ]
   }
 }

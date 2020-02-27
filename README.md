@@ -1,4 +1,5 @@
 # Express Rest API Server Boilerplate
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/db43be85b4f342febacbcb3b2526e56d)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TrevorN1126/express-sequelize-rest-api-server&amp;utm_campaign=Badge_Grade)
 ## Overview
 This is a boilerplate application for building REST APIs with Express, Mongoose, permission based JWT Authentication and Mocha tests.
 Created with attempting to follow [Node.js Best Practices](https://github.com/goldbergyoni/nodebestpractices) as closely as possible.
@@ -108,6 +109,8 @@ yarn lint:watch
 
 ### Layered Component based
 Folders under the /server directory are organized into self-contained components that don't share files with others, each constitutes very few files (e.g. models, routes, controllers, services, test, etc.) so that it's very easy to reason about it. This not only draws a clean separation of concerns but also significantly eases mocking and testing the system.
+
+![layers info](./docs/img/layers.png)
 
 component/component.route.js
 : Uses an `express.Router()` to define the endpoint, register middleware and then calls the component controller
