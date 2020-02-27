@@ -24,9 +24,9 @@ const updateThing = {
   description: 'description of newTestThing1'
 };
 
-const badThing = {
-  description: 'Thing without the required name'
-};
+// const badThing = {
+//   description: 'Thing without the required name'
+// };
 
 
 describe('## Thing Routes', () => {

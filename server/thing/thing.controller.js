@@ -1,6 +1,6 @@
 /**
 * Controller for the thing component
-* @module Thing Controller
+* @module ThingController
 */
 
 const httpStatus = require('http-status');
@@ -9,8 +9,10 @@ const ThingService = require('./thing.service');
 
 /**
 * Create new thing
-* @property {string} req.body.name - The name of a thing.
-* @property {string} req.body.description - The description of a thing.
+* @param {Object} req.body
+* @param {String} req.body.name - The name of a thing.
+* @param {String} [req.body.description] - The description of a thing.
+* @param {Integer} req.body.UserId - The PK of the user that this thing belongs to.
 * @returns {Thing}
 */
 async function create(req, res, next) {

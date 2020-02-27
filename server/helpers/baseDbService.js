@@ -4,7 +4,7 @@
  */
 class DbService {
   /**
-   * Creates a database service
+   * Creates a database service with basic CRUD functions
    * @param {string} componentName - The name of the component being used
    * @param {object} models - All database models
    */

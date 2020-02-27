@@ -2,6 +2,14 @@
 * Routes for the /api/users endpoints
 * @module User Routes
 */
+/**
+ * User model
+ * @typedef {Object} User
+ * @property {string} firstName - The user's first name.
+ * @property {string} lastName - The user's last name.
+ * @property {string} username - The user's username.
+ * @property {string} password - The user's hashedpassword.
+ */
 
 const express = require('express');
 const validate = require('express-validation');
