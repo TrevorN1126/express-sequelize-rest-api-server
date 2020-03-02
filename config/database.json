@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "t6y7uhgyMdb",
+    "password": "t6y7uhgyMdb", 
     "database": "database_development",
     "host": "127.0.0.1",
     "dialect": "mariadb",

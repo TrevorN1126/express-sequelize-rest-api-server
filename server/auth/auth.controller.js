@@ -34,8 +34,6 @@ async function login(req, res, next) {
 * @returns {*}
 */
 function getRandomNumber(req, res) {
-  // req.user is assigned by jwt middleware if valid token is provided
-  // if (req.)
   return res.json({
     num: Math.random() * 100
   });

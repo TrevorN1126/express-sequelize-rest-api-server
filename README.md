@@ -1,5 +1,6 @@
 # Express Rest API Server Boilerplate
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/db43be85b4f342febacbcb3b2526e56d)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TrevorN1126/express-sequelize-rest-api-server&amp;utm_campaign=Badge_Grade)
+**This project is a work in progress**
 ## Overview
 This is a boilerplate application for building REST APIs with Express, Mongoose, permission based JWT Authentication and Mocha tests.
 Created with attempting to follow [Node.js Best Practices](https://github.com/goldbergyoni/nodebestpractices) as closely as possible.
@@ -44,7 +45,12 @@ Set environment (vars):
 cp .env.example .env
 ```
 
-**Make sure the database server is running and the databases defined in config/database.json are already created**
+**Make sure the database server is running**
+
+Create datbases
+```sh
+npx sequelize-cli db:create
+```
 
 Create db tables
 ```sh

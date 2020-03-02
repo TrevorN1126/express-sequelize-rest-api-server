@@ -30,7 +30,7 @@ class DbService {
 
   /**
    * Get a item
-   * @params {string} itemId - The _id of the item
+   * @params {string} itemId - The id of the item
    * @return {object|Error} item
    */
   async GetItem(itemId) {
@@ -76,7 +76,7 @@ class DbService {
   }
 
   /**
-   * Update a item
+   * Remove an item
    * @params {string} itemId - The _id of the item
    * @return {number|Error} 1 or error - "Item not found."
    */

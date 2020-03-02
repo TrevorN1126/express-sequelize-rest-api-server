@@ -32,7 +32,7 @@ async function create(req, res, next) {
 
 /**
  * Get an existing user
- * @property {string} req.params.userId - The _id of user.
+ * @property {string} req.params.userId - The id of user.
  * @returns {User}
  */
 async function get(req, res, next) {
@@ -51,7 +51,7 @@ async function get(req, res, next) {
 
 /**
  * Update existing user
- * @property {string} req.params.userId - The _id of user.
+ * @property {string} req.params.userId - The id of user.
  * @property {object} req.body - Object containing new values for the user.
  * @returns {User}
  */
@@ -87,7 +87,7 @@ async function list(req, res, next) {
 
 /**
  * Delete user.
- * @property {string} req.params.userId - The _id of user.
+ * @property {string} req.params.userId - The id of user.
  * @returns {User}
  */
 async function remove(req, res, next) {
